@@ -122,6 +122,11 @@ export enum ViewModelTypes {
   Value = 'value'
 }
 
+export enum ViewChartTypes {
+  Chart = 'chart',
+  Pivot = 'pivot'
+}
+
 export const DefaultModelTypeSqlTypeSetting = {
   [ViewModelTypes.Value]: SQL_NUMBER_TYPES,
 

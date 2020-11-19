@@ -91,7 +91,7 @@ export class Legend extends React.PureComponent<ILegendProps, ILegendStates> {
       [styles.legend]: true,
       [styles.shown]: list.length
     })
-
+    
     const legendBoxes = list.map((i) => {
       const { values } = i.localConfig
       const listItems = Object.entries(values).map(([key, value]: [string, { value: string, visible: boolean }]) => {

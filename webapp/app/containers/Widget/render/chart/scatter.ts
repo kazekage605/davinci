@@ -236,7 +236,6 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
     }
   function brushselected (params) {
     console.log({params})
-  //  console.log({seriesData})
     const brushComponent = params.batch[0]
     const brushed = []
     const sourceData = seriesData[0]

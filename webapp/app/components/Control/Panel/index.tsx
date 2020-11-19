@@ -162,7 +162,6 @@ class ControlPanel extends PureComponent<
       customOptions,
       relatedViews
     } = renderControl
-
     if (optionType === ControlOptionTypes.Custom) {
       onGetOptions(
         key,
@@ -173,7 +172,6 @@ class ControlPanel extends PureComponent<
     } else {
       const parents = getParents(parent, flatTree)
       const requestParams = {}
-
       // get cascading conditions
       Object.entries(relatedViews).forEach(([viewId, relatedView]) => {
         let filters = []
@@ -291,7 +289,6 @@ class ControlPanel extends PureComponent<
             break
         }
       })
-
       if (Object.keys(requestParams).length) {
         onGetOptions(
           key,

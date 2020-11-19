@@ -29,7 +29,6 @@ const useDashboardConfigMenu = (style: React.CSSProperties = {}) => {
   const EditMenuItem = useProjectPermission(MenuItem, 'vizPermission', 2)
   const DeleteMenuItem = useProjectPermission(MenuItem, 'vizPermission', 3)
 
-  console.log(EditMenuItem, DeleteMenuItem)
   return (
     <Menu style={style}>
       <EditMenuItem key="edit"><Icon type="edit" />编辑</EditMenuItem>

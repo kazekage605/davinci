@@ -184,6 +184,7 @@ export class Workbench extends React.Component<
 
   public componentWillReceiveProps(nextProps: IWorkbenchProps) {
     const { currentWidget } = nextProps
+   
     if (currentWidget && currentWidget !== this.props.currentWidget) {
       const { id, name, description, viewId, config } = currentWidget
       const {
@@ -197,6 +198,7 @@ export class Workbench extends React.Component<
         queryMode,
         ...rest
       } = config
+
       this.setState({
         id,
         name,
@@ -450,6 +452,7 @@ export class Workbench extends React.Component<
     })
   }
 
+ 
   private setWidgetProps = (widgetProps: IWidgetProps) => {
     const { cols, rows } = widgetProps
     const data = [...(widgetProps.data || this.state.widgetProps.data)]
@@ -486,7 +489,7 @@ export class Workbench extends React.Component<
       widgetProps,
       computed,
       originalComputed,
-      autoLoadData
+      autoLoadData,
     } = this.state
     if (!name.trim()) {
       message.error('Widget名称不能为空')
@@ -629,7 +632,6 @@ export class Workbench extends React.Component<
       settingFormVisible: false
     })
   }
-
   public render() {
     const {
       views,
@@ -661,7 +663,7 @@ export class Workbench extends React.Component<
     } = this.state
     const { queryMode: workbenchQueryMode, multiDrag } = settings
 
-    const { selectedChart, cols, rows, metrics, data } = widgetProps
+    let { selectedChart, cols, rows, metrics, data } = widgetProps
     const hasDataConfig = !!(cols.length || rows.length || metrics.length)
     const maskProps: IDashboardItemMaskProps = {
       loading: dataLoading,

@@ -5,7 +5,8 @@ export enum SettingTypes {
   Color = 1 << 2,
   Filters = 1 << 3,
   Label = 1 << 4,
-  Tip = 1 << 5
+  Tip = 1 << 5,
+  Total = 1 << 6
 }
 
 export enum ItemTypes {

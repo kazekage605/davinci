@@ -23,7 +23,6 @@ export class ScrollablePivot extends React.Component<IPivotProps, {}> {
 
   public componentDidMount () {
     const { rowHeader, columnHeader, columnFooter, tableBody } = this.pivot
-
     this.columnHeaderListenerCallback = this.duplexScroll({
       type: 'horizontal',
       role: 'header',

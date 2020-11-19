@@ -431,7 +431,7 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
           selectedItems,
           errorMessage
         } = currentItemsInfo[id]
-
+        
         const widget = widgets.find((w) => w.id === widgetId)
         const view = formedViews[widget.viewId]
         const interacting = interactingStatus[id] || false

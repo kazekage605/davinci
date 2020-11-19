@@ -285,7 +285,6 @@ class FormatConfigForm extends React.PureComponent<IFormatConfigFormProps, IForm
     const { form } = this.props
     form.validateFieldsAndScroll((err, fieldsValues) => {
       if (err) { return }
-
       const formatType = fieldsValues['formatType']
       const config: IFieldFormatConfig = {
         formatType

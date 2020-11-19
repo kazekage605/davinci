@@ -5,17 +5,17 @@ import Sort from './Sort'
 import Format from './Format'
 import Color from './Color'
 import Filters from './Filters'
+import Total from './Total'
 
-import { ViewModelTypes, ViewModelVisualTypes } from 'containers/View/constants'
-import ChartTypes from 'containers/Widget/config/chart/ChartTypes'
+import { ViewModelTypes, ViewModelVisualTypes, ViewChartTypes } from 'containers/View/constants'
 import { SettingTypes, ItemTypes, ItemValueTypes } from './types'
 
 import { Menu } from 'antd'
 const { Item: MenuItem, SubMenu, Divider: MenuDivider } = Menu
 
-const SettingsList = [...Aggregator, Format, Field, ...Sort, Filters, Color]
+let SettingsList = [...Aggregator, Format, Field, ...Sort, Filters, Color]
 
-export function getSettingKeyByDropItem (itemKey: string): 'aggregator' | 'field' | 'sort' | 'format' | 'color' | 'filters' | 'tip' {
+export function getSettingKeyByDropItem (itemKey: string): 'aggregator' | 'field' |'total'| 'sort' | 'format' | 'color' | 'filters' | 'tip' {
   let settingKey
   SettingsList.some((s) => {
     const exists = s.items.some((item) => !!item[itemKey])
@@ -25,7 +25,16 @@ export function getSettingKeyByDropItem (itemKey: string): 'aggregator' | 'field
   return settingKey
 }
 
-export function getAvailableSettings (settingType: SettingTypes, itemType: ItemTypes, itemValueType: ItemValueTypes) {
+export function getSettingsListAuth (viewChartType: ViewChartTypes){
+  if(viewChartType == 'chart'){
+    return [...Aggregator, Format, Field, ...Sort, Filters, Color]
+  } else {
+    return [...Aggregator, Format, Field, Total, ...Sort, Filters, Color]
+  }
+}
+
+export function getAvailableSettings (settingType: SettingTypes, itemType: ItemTypes, itemValueType: ItemValueTypes, viewChartType: ViewChartTypes) {
+  SettingsList = getSettingsListAuth(viewChartType)
   const availableSettings = SettingsList.filter((settingItem) => {
     const { constrants } = settingItem
     const byType = constrants.some((constrant) => (
@@ -88,6 +97,11 @@ export const MapItemValueTypes = {
   [ViewModelVisualTypes.GeoProvince]: ItemValueTypes.GeoProvince,
   [ViewModelVisualTypes.Number]: ItemValueTypes.Number,
   [ViewModelVisualTypes.String]: ItemValueTypes.String
+}
+
+export const MapViewChartTypes = {
+  [ViewChartTypes.Pivot]: ViewChartTypes.Pivot,
+  [ViewChartTypes.Chart]: ViewChartTypes.Chart
 }
 
 export default SettingsList

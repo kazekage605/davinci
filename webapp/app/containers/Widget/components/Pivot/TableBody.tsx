@@ -4,7 +4,7 @@ import { IDrawingData, IMetricAxisConfig, ILegend } from './Pivot'
 import { IWidgetMetric, DimetionType, RenderType, IChartStyles } from '../Widget'
 import Cell from './Cell'
 import Chart, { IChartUnit, IChartLine, IChartBlock } from './Chart'
-import { PIVOT_CANVAS_SIZE_LIMIT, PIVOT_CANVAS_POLAR_SIZE_LIMIT } from 'app/globalConstants'
+import { PIVOT_CANVAS_SIZE_LIMIT, PIVOT_CANVAS_POLAR_SIZE_LIMIT, DEFAULT_SPLITER } from 'app/globalConstants'
 import {
   getPivotContentTextWidth,
   getPivotCellWidth,
@@ -14,7 +14,7 @@ import {
 } from '../util'
 import { uuid } from 'utils/util'
 import { IDataParamProperty } from '../Workbench/OperatingPanel'
-
+import { SumText } from './constants'
 const styles = require('./Pivot.less')
 
 export interface ITableBodyProps {
@@ -63,9 +63,7 @@ export class TableBody extends React.Component<ITableBodyProps, ITableBodyState>
     }
   }
   private gridCutting = (width, height, chartGrid) => {
-    // console.log(chartGrid)
     const chunks = this.horizontalCutting(height, chartGrid)
-    // console.log(chunks)
     chunks.forEach((chunk) => {
       chunk.data = this.verticalCutting(width, chunk.data)
     })
@@ -196,7 +194,7 @@ export class TableBody extends React.Component<ITableBodyProps, ITableBodyState>
   })
 
   public render () {
-    const {
+    let {
       rows,
       cols,
       rowKeys,
@@ -509,15 +507,13 @@ export class TableBody extends React.Component<ITableBodyProps, ITableBodyState>
       )
     } else {
       if (colKeys.length && rowKeys.length) {
-        rowKeys.forEach((rk) => {
-          const flatRowKey = rk.join(String.fromCharCode(0))
+        rowKeys.forEach((rk,index) => {
+          let flatRowKey = rk.join(String.fromCharCode(0))
           const line = []
           tableWidth = 0
-
           colKeys.forEach((ck) => {
             const flatColKey = ck.join(String.fromCharCode(0))
             const records = tree[flatRowKey][flatColKey]
-
             const { width, height } = colTree[flatColKey]
             const cellWidth = getPivotCellWidth(width)
             tableWidth += cellWidth
@@ -587,6 +583,7 @@ export class TableBody extends React.Component<ITableBodyProps, ITableBodyState>
 
           const cellWidth = getPivotCellWidth(rowWidths[rowWidths.length - 1])
           tableWidth += cellWidth
+          
           line.push(
             <Cell
               key={flatRowKey}

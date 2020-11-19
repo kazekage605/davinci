@@ -202,6 +202,7 @@ export function* getViewData (action: ViewActionType) {
 }
 
 export function* getSelectOptions (action: ViewActionType) {
+  
   if (action.type !== ActionTypes.LOAD_SELECT_OPTIONS) {
     return
   }

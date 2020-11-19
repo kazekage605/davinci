@@ -3,9 +3,17 @@ import classnames from 'classnames'
 import Yaxis from './Yaxis'
 import { IDrawingData, IMetricAxisConfig } from './Pivot'
 import { IWidgetMetric, DimetionType, IChartStyles } from '../Widget'
-import { spanSize, getPivotCellWidth, getPivotCellHeight, getAxisData, decodeMetricName, getAggregatorLocale, getPivot, getStyleConfig } from '../util'
+import {
+  spanSize,
+  getPivotCellWidth,
+  getPivotCellHeight,
+  getAxisData,
+  decodeMetricName,
+  getAggregatorLocale,
+  getPivot,
+  getStyleConfig
+} from '../util'
 import { PIVOT_LINE_HEIGHT, DEFAULT_SPLITER } from 'app/globalConstants'
-
 const styles = require('./Pivot.less')
 
 interface IRowHeaderProps {
@@ -25,8 +33,22 @@ interface IRowHeaderProps {
 }
 
 export class RowHeader extends React.Component<IRowHeaderProps, {}> {
-  public render () {
-    const { rows, rowKeys, colKeys, rowWidths, rowTree, colTree, tree, chartStyles, drawingData, dimetionAxis, metrics, metricAxisConfig, hasMetricNameDimetion } = this.props
+  public render() {
+    let {
+      rows,
+      rowKeys,
+      colKeys,
+      rowWidths,
+      rowTree,
+      colTree,
+      tree,
+      chartStyles,
+      drawingData,
+      dimetionAxis,
+      metrics,
+      metricAxisConfig,
+      hasMetricNameDimetion
+    } = this.props
     const { elementSize, unitMetricHeight } = drawingData
     const {
       color: fontColor,
@@ -43,13 +65,18 @@ export class RowHeader extends React.Component<IRowHeaderProps, {}> {
       let elementCount = 0
       let x = -1
       let hasAuxiliaryLine = false
+  
 
       rowKeys.forEach((rk, i) => {
         const flatRowKey = rk.join(String.fromCharCode(0))
         const header = []
         const { height, records } = rowTree[flatRowKey]
         const maxElementCount = tree[flatRowKey]
-          ? Math.max(...Object.values(tree[flatRowKey]).map((r: any[]) => r ? r.length : 0))
+          ? Math.max(
+              ...Object.values(tree[flatRowKey]).map((r: any[]) =>
+                r ? r.length : 0
+              )
+            )
           : records.length
         let cellHeight = 0
 
@@ -73,11 +100,16 @@ export class RowHeader extends React.Component<IRowHeaderProps, {}> {
             }
           } else {
             if (j === rk.length - 1) {
-              cellHeight = dimetionAxis === 'col'
-                ? unitMetricHeight * metrics.length
-                : maxElementCount === 1
+              cellHeight =
+                dimetionAxis === 'col'
+                  ? unitMetricHeight * metrics.length
+                  : maxElementCount === 1
                   ? getPivotCellHeight(height)
-                  : getPivotCellHeight(maxElementCount * (hasMetricNameDimetion ? 1 : metrics.length) * PIVOT_LINE_HEIGHT)
+                  : getPivotCellHeight(
+                      maxElementCount *
+                        (hasMetricNameDimetion ? 1 : metrics.length) *
+                        PIVOT_LINE_HEIGHT
+                    )
               hasAuxiliaryLine = dimetionAxis === 'col'
             }
             x = spanSize(rowKeys, i, j)
@@ -108,8 +140,10 @@ export class RowHeader extends React.Component<IRowHeaderProps, {}> {
                 className={columnClass}
                 style={{
                   width: getPivotCellWidth(rowWidths[j]),
-                  ...(!!cellHeight && {height: cellHeight}),
-                  ...!dimetionAxis && {backgroundColor: headerBackgroundColor},
+                  ...(!!cellHeight && { height: cellHeight }),
+                  ...(!dimetionAxis && {
+                    backgroundColor: headerBackgroundColor
+                  }),
                   color: fontColor,
                   fontSize: Number(fontSize),
                   fontFamily,
@@ -119,7 +153,12 @@ export class RowHeader extends React.Component<IRowHeaderProps, {}> {
               >
                 <p
                   className={contentClass}
-                  {...(!!cellHeight && {style: {height: cellHeight - 1, lineHeight: `${cellHeight - 1}px`}})}
+                  {...(!!cellHeight && {
+                    style: {
+                      height: cellHeight - 1,
+                      lineHeight: `${cellHeight - 1}px`
+                    }
+                  })}
                 >
                   {colContent}
                   {hasAuxiliaryLine && (
@@ -137,17 +176,26 @@ export class RowHeader extends React.Component<IRowHeaderProps, {}> {
           }
         })
 
-        headers.push(
-          <tr key={flatRowKey}>
-            {header}
-          </tr>
-        )
+        headers.push(<tr key={flatRowKey}>{header}</tr>)
       })
     }
 
     let yAxis
-    if (dimetionAxis && !(dimetionAxis === 'row' && !colKeys.length && !rowKeys.length)) {
-      const { data, length } = getAxisData('y', rowKeys, colKeys, rowTree, colTree, tree, metrics, drawingData, dimetionAxis)
+    if (
+      dimetionAxis &&
+      !(dimetionAxis === 'row' && !colKeys.length && !rowKeys.length)
+    ) {
+      const { data, length } = getAxisData(
+        'y',
+        rowKeys,
+        colKeys,
+        rowTree,
+        colTree,
+        tree,
+        metrics,
+        drawingData,
+        dimetionAxis
+      )
       yAxis = (
         <Yaxis
           height={length}
@@ -168,9 +216,7 @@ export class RowHeader extends React.Component<IRowHeaderProps, {}> {
     return (
       <div className={containerClass}>
         <table className={styles.pivot}>
-          <thead>
-            {headers}
-          </thead>
+          <thead>{headers}</thead>
         </table>
         {yAxis}
       </div>
