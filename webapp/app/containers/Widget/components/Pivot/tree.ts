@@ -99,7 +99,6 @@ class MultiwayTree {
         })
       }
     })
-    console.log(totalWideList, 'totalWideList')
     totalWideList = totalWideList.reduce((list, item) => {
       const equalItem = list.find((obj) => {
         if (colorArray.length) {
@@ -901,7 +900,6 @@ class MultiwayTree {
     tree.getSumMultiwayTree()
     tree.getMetricNodeList()
     tree.getSumMetricDFS()
-    console.log(tree, 'tree的值')
     return tree.getTotalWideTableJson()
   }
 }

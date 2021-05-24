@@ -486,7 +486,7 @@ function mappingFilters(sourceDataFilter, group): IFilter[] {
   }
 
   const mappgingSource = sourceDataFilter.map((source) =>
-    source && source[group] ? source[group] : ''
+    source && source[group] ? source[group] : (source[`${group}_cols`] || source[`${group}_rows`]) ? (source[`${group}_cols`] || source[`${group}_rows`]) : ''
   )
   const sqlType = getSqlType(group)
   return [

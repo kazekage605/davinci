@@ -488,6 +488,7 @@ export class DashboardItem extends React.PureComponent<
         this.state.widgetProps
       )({ name }, sourceDataOfBrushed, sourceDataGroup)
     } else {
+     
       set = strategiesOfDrillDownNullDrillHistory(
         operationWidgetProps,
         this.state.widgetProps
@@ -502,7 +503,6 @@ export class DashboardItem extends React.PureComponent<
       coustomTable,
       defaultScenes
     } = set
-
     if (dimensions && dimensions.length) {
       if (dimensions === WidgetDimension.COL) {
         strategiteStream = pivotCol()
